@@ -1,0 +1,10 @@
+set format_playlist=%-20a │ %-100t%=│ %d
+set format_playlist_va=
+set altformat_playlist=%-100F %=│ %d
+set lib_sort=filename
+set play_library=true
+set play_sorted=true
+set shuffle=true
+set softvol=true
+set output_plugin=ao
+set start_view=sorted

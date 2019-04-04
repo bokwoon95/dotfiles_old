@@ -1,0 +1,18 @@
+brew tap thefox/brewery
+brew install cmus-control
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+brew services start thefox/brewery/cmus-control
+- OR -
+cmuscontrold
+
+The media keys will launch itunes by default. To prevent that behavior you need to run this command:
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+
+BUT you need to disable System Integrity Protection (SIP) first:
+Restart macOS in Recovery Mode (hold Cmd+R while booting up)
+Open 'Utilities', select 'Terminal', run `csrutil disable`. To check the status of SIP, run `csrutil status`.
+Restart macOS. Open iTunes. Then run `launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist` again.
+If you encounter
+/System/Library/LaunchAgents/com.apple.rcd.plist: Could not find specified service
+it means iTunes hasn't been started yet so the service cannot be found.
+Start iTunes first before running `launchctl unload /System/Library/LaunchAgents/com.apple.rcd.plist`

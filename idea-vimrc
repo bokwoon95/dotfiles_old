@@ -1,0 +1,73 @@
+" <Vim Emulator> to <C-Q> <^J> | <Quick Documentation> to <C-Cmd-J>
+" <Find in Path> to <Sh-Cmd-F>
+" Remove <^M> from <Commit Message History>
+" Rebind <Prev/Next Method> from <C-Up/Down> to <M-Up/Down>
+" Rebind <^V> | <VCS Operations Popup...> to <C-Cmd-V>, bind <C-v> to Vim Emulation
+" Bind <C-p> to <Up>
+" Unbind both instances of <^N>, rebind <C-n> to <Down>
+" Bind <C-b> & <C-f> to <Left> & <Right>. Unbind anything else that takes up these slots
+" Add <C-Cm-p>, <C-Cm-n> as <Back> & <Forward>
+" Bind <C-q>, <C-s> to <Select Previous Tab>, <Select Next Tab>
+" Bind <C-w><C-q> to Main Menu>Window>Editor Tabs>Close
+" Bind <M-h>, <M-l>, <M-j>, <M-k> to navigate split windows
+
+" Plugins
+" Disable <Markdown Support>, install & use <Markdown Navigator> instead
+	" Replace Markdown Navigator <^B> with <C-Cm-b>
+" Install GoToTabs, fill in the keybindings with <M-[number]>
+
+set ignorecase smartcase
+set scrolloff=5
+set incsearch
+set visualbell
+
+imap jk <esc>l
+imap <C-a> <C-o>^
+imap <C-e> <end>
+imap <C-m> <cr>
+imap <C-k> <C-o>D<right>
+imap <C-u> <C-o>cc
+imap <C-q><C-q> System.out.println();<Left><Left>
+let mapleader = " "
+noremap H g^
+nnoremap L g$
+vnoremap L g$h
+nnoremap <space>sv :source<space>~/.ideavimrc<cr>
+nnoremap <C-j> 5gj
+vnoremap <C-j> 5gj
+nnoremap <C-k> 5gk
+vnoremap <C-k> 5gk
+nnoremap <down> <C-e>
+nnoremap <up> <C-y>
+nnoremap <right> 5<C-e>
+nnoremap <left> 5<C-y>
+vnoremap <tab> %
+nnoremap <tab> %
+nnoremap <C-u> <tab>
+nnoremap <C-a> <C-u>
+vnoremap < <gv
+vnoremap > >gv
+nnoremap <leader>ri gg=G``| "reindent the whole file while staying in the same place
+nnoremap ZAQ :wqa<CR>
+nnoremap Qv ^vg_| "<M-v> visually select a whole line w/o newlines
+nnoremap yd ^y$"_dd| "yank-delete a line w/o newline char
+nnoremap Y mT^y$`T| "Yank a line w/o newline char
+noremap Qd "_d| "Black_hole delete without saving to register
+nnoremap QDD "_dd| "Black_hole delete line without saving to register
+
+" IntelliJ shortcuts |isett|
+" <Cm-n> Find Class
+" <Cm-S-n> Find File
+" <Cm-S-M-n> Find Symbol
+" <Cm-e> Recent Files
+" <Cm-b> Goto Method/Variable Declaration
+" <Cm-/> Line comment/uncomment
+" <C-S-/> Block comment/uncomment (don't use <Cm-S-/>!)
+" <Cm-u> Navigate to Super Method
+" <Cm-M-b> Navigate to Implementation
+" <Cm-M-Left>, <C-Cm-p> Go back previous location
+" <Cm-M-Right>, <C-Cm-n> Go forward to next location
+" <Cm-M-Up> Go to previous occurence
+" <Cm-M-Down> Go to next occurence
+" <Cm-Shift-i> Show Method Declaration in separate window
+" <C-Cmd-v> Show VCS actions menu
