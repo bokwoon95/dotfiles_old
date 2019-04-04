@@ -347,12 +347,52 @@ gitconfig() {
   fi; # ec
   if ! git config --global alias.copyfile >/dev/null 2>&1; then
     git config --global alias.copyfile "!copyfile() {
-    git checkout \"\$1\" \"\$2\";
+    fname=\"\${2%.*}\";
+    [[ \"\$2\" = *.* ]] && fext=\".\${2##*.}\" || fext=\"\";
+    git show \"\$1\":\"\$2\" > \"\$fname\$(date '+%Y-%m-%dT%H_%M_%S')\$fext\";
     git status; }; copyfile"
     echo "alias copyfile ✓"
   else
     echo "alias copyfile already defined"
   fi; # copyfile
+  if ! git config --global alias.overwrite >/dev/null 2>&1; then
+    git config --global alias.overwrite "!overwrite() {
+    git checkout \"\$1\" -- \"\$2\";
+    git status; }; overwrite"
+    echo "alias overwrite ✓"
+  else
+    echo "alias overwrite already defined"
+  fi; # copyfile
+  if ! git config --global alias.ac >/dev/null 2>&1; then
+    git config --global alias.ac "!ac() {
+    if [ \$# -eq 0 ];
+    then git add . && git commit -v;
+    else git add . && git commit -vm \"\$@\";
+    fi; }; ac"
+    echo "alias ac ✓"
+  else
+    echo "alias ac already defined"
+  fi; # ac
+  if ! git config --global alias.cpush >/dev/null 2>&1; then
+    git config --global alias.cpush "!cpush() {
+    if [ \$# -eq 0 ];
+    then git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    else git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    fi; }; cpush"
+    echo "alias cpush ✓"
+  else
+    echo "alias cpush already defined"
+  fi; # cpush
+  if ! git config --global alias.acpush >/dev/null 2>&1; then
+    git config --global alias.acpush "!acpush() {
+    if [ \$# -eq 0 ];
+    then git add . && git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    else git add . && git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    fi; }; acpush"
+    echo "alias acpush ✓"
+  else
+    echo "alias acpush already defined"
+  fi; # acpush
 
 
   # https://thoughtbot.com/blog/sed-102-replace-in-place
