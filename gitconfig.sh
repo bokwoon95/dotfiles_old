@@ -350,7 +350,8 @@ gitconfig() {
     fname=\"\${2%.*}\";
     fext=\".\${2##*.}\";
     [ \$fname = \$fext ] && fext='';
-    git show \"\$1\":\"\$2\" > \"\$fname\$(date '+%Y-%m-%dT%H_%M_%S')\$fext\";
+    branch=\$(echo \"\$1\" | sed 's/[[:space:]]\{1,\}/_/g');
+    git show \"\$1\":\"\$2\" > \"\$fname_\$branch\$fext\";
     git status; }; copyfile"
     echo "alias copyfile ✓"
   else
