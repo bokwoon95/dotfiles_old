@@ -182,9 +182,10 @@ gitconfig() {
 
   if ! git config --global alias.goto >/dev/null 2>&1; then
     git config --global alias.goto "!goto() {
-    git checkout \"\$1\"
+    git checkout --quiet \"\$1\"
     && git branch -f master HEAD
-    && git checkout master; }; goto"
+    && git checkout --quiet master;
+    git status; }; goto"
     echo "alias goto ✓"
   else
     echo "alias goto already defined"
