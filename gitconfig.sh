@@ -365,7 +365,7 @@ gitconfig() {
     echo "alias overwrite ✓"
   else
     echo "alias overwrite already defined"
-  fi; # copyfile
+  fi; # overwrite
   if ! git config --global alias.ac >/dev/null 2>&1; then
     git config --global alias.ac "!ac() {
     if [ \$# -eq 0 ];
