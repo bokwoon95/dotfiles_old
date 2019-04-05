@@ -92,13 +92,13 @@ gitconfig() {
 
   if [[ $dhfail == "" ]]; then
     if ! git config --global pager.log >/dev/null 2>&1; then
-      git config --global pager.log "$dhpath | less -RS"
+      git config --global pager.log "$dhpath | less -RiMSFX -#4"
     fi; echo "pager.log : $(git config --global pager.log)"
     if ! git config --global pager.show >/dev/null 2>&1; then
-      git config --global pager.show "$dhpath | less -RS"
+      git config --global pager.show "$dhpath | less -RiMSFX -#4"
     fi; echo "pager.show : $(git config --global pager.show)"
     if ! git config --global pager.diff >/dev/null 2>&1; then
-      git config --global pager.diff "$dhpath | less -RS"
+      git config --global pager.diff "$dhpath | less -RiMSFX -#4"
     fi; echo "pager.diff : $(git config --global pager.diff)"
 
 
@@ -106,6 +106,12 @@ gitconfig() {
     if ! git config --global interactive.diffFilter >/dev/null 2>&1; then
       git config --global interactive.diffFilter "$dhpath"
     fi; echo "interactive.diffFilter : $(git config --global interactive.diffFilter)"
+
+
+    ## [color] ##
+    if ! git config --global color.diff >/dev/null 2>&1; then
+      git config --global color.diff "always"
+    fi; echo "color.diff : $(git config --global color.diff)"
   fi
 
 
