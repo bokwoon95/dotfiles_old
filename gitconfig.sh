@@ -348,7 +348,8 @@ gitconfig() {
   if ! git config --global alias.copyfile >/dev/null 2>&1; then
     git config --global alias.copyfile "!copyfile() {
     fname=\"\${2%.*}\";
-    [[ \"\$2\" = *.* ]] && fext=\".\${2##*.}\" || fext=\"\";
+    fext=\".\${2##*.}\";
+    [ \$fext = \$fext ] && \$fext='';
     git show \"\$1\":\"\$2\" > \"\$fname\$(date '+%Y-%m-%dT%H_%M_%S')\$fext\";
     git status; }; copyfile"
     echo "alias copyfile ✓"
