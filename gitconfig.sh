@@ -92,13 +92,13 @@ gitconfig() {
 
   if [[ $dhfail == "" ]]; then
     if ! git config --global pager.log >/dev/null 2>&1; then
-      git config --global pager.log "$dhpath | less -RS"
+      git config --global pager.log "$dhpath | less -RiMSFX#4"
     fi; echo "pager.log : $(git config --global pager.log)"
     if ! git config --global pager.show >/dev/null 2>&1; then
-      git config --global pager.show "$dhpath | less -RS"
+      git config --global pager.show "$dhpath | less -RiMSFX#4"
     fi; echo "pager.show : $(git config --global pager.show)"
     if ! git config --global pager.diff >/dev/null 2>&1; then
-      git config --global pager.diff "$dhpath | less -RS"
+      git config --global pager.diff "$dhpath | less -RiMSFX#4"
     fi; echo "pager.diff : $(git config --global pager.diff)"
 
 
@@ -106,6 +106,12 @@ gitconfig() {
     if ! git config --global interactive.diffFilter >/dev/null 2>&1; then
       git config --global interactive.diffFilter "$dhpath"
     fi; echo "interactive.diffFilter : $(git config --global interactive.diffFilter)"
+
+
+    ## [color] ##
+    if ! git config --global color.diff >/dev/null 2>&1; then
+      git config --global color.diff "always"
+    fi; echo "color.diff : $(git config --global color.diff)"
   fi
 
 
@@ -180,9 +186,10 @@ gitconfig() {
 
   if ! git config --global alias.goto >/dev/null 2>&1; then
     git config --global alias.goto "!goto() {
-    git checkout \"\$1\"
+    git checkout --quiet \"\$1\"
     && git branch -f master HEAD
-    && git checkout master; }; goto"
+    && git checkout --quiet master; 
+    git status; }; goto"
     echo "alias goto ✓"
   else
     echo "alias goto already defined"
@@ -345,12 +352,54 @@ gitconfig() {
   fi; # ec
   if ! git config --global alias.copyfile >/dev/null 2>&1; then
     git config --global alias.copyfile "!copyfile() {
-    git checkout \"\$1\" \"\$2\";
+    fname=\"\${2%.*}\";
+    fext=\".\${2##*.}\";
+    [ \$fname = \$fext ] && fext='';
+    branch=\$(echo \"\$1\" | sed 's/[[:space:]]\\{1,\\}/_/g');
+    git show \"\$1\":\"\$2\" > \"\$fname-\$branch\$fext\";
     git status; }; copyfile"
     echo "alias copyfile ✓"
   else
     echo "alias copyfile already defined"
   fi; # copyfile
+  if ! git config --global alias.overwrite >/dev/null 2>&1; then
+    git config --global alias.overwrite "!overwrite() {
+    git checkout \"\$1\" -- \"\$2\";
+    git status; }; overwrite"
+    echo "alias overwrite ✓"
+  else
+    echo "alias overwrite already defined"
+  fi; # overwrite
+  if ! git config --global alias.ac >/dev/null 2>&1; then
+    git config --global alias.ac "!ac() {
+    if [ \$# -eq 0 ];
+    then git add . && git commit -v;
+    else git add . && git commit -vm \"\$@\";
+    fi; }; ac"
+    echo "alias ac ✓"
+  else
+    echo "alias ac already defined"
+  fi; # ac
+  if ! git config --global alias.cpush >/dev/null 2>&1; then
+    git config --global alias.cpush "!cpush() {
+    if [ \$# -eq 0 ];
+    then git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    else git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    fi; }; cpush"
+    echo "alias cpush ✓"
+  else
+    echo "alias cpush already defined"
+  fi; # cpush
+  if ! git config --global alias.acpush >/dev/null 2>&1; then
+    git config --global alias.acpush "!acpush() {
+    if [ \$# -eq 0 ];
+    then git add . && git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    else git add . && git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
+    fi; }; acpush"
+    echo "alias acpush ✓"
+  else
+    echo "alias acpush already defined"
+  fi; # acpush
 
 
   # https://thoughtbot.com/blog/sed-102-replace-in-place
