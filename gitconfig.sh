@@ -82,7 +82,7 @@ gitconfig() {
 
 
   ## [pager] ##
-  if [[ ! -f /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight ]]; then
+  if [ ! -f "/usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight" ]; then
     sudo curl https://raw.githubusercontent.com/git/git/fd99e2bda0ca6a361ef03c04d6d7fdc7a9c40b78/contrib/diff-highlight/diff-highlight -Lo /usr/local/bin/diff-highlight --create-dirs || dhfail="true"
     sudo chmod a+x /usr/local/bin/diff-highlight || dhfail="true"
     dhpath="/usr/local/bin/diff-highlight"
@@ -90,7 +90,7 @@ gitconfig() {
     dhpath="/usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight"
   fi
 
-  if [[ $dhfail == "" ]]; then
+  if [ \"$dhfail\" = "" ]; then
     if ! git config --global pager.log >/dev/null 2>&1; then
       git config --global pager.log "$dhpath | less -RiMSFX#4"
     fi; echo "pager.log : $(git config --global pager.log)"
@@ -142,7 +142,7 @@ gitconfig() {
 
   if ! git config --global alias.commits >/dev/null 2>&1; then
     git config --global alias.commits "!commits() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git add . && git commit -v;
     else git add . && git commit -vm \"\$@\";
     fi; }; commits"
@@ -153,7 +153,7 @@ gitconfig() {
 
   if ! git config --global alias.commitpush >/dev/null 2>&1; then
     git config --global alias.commitpush "!commitpush() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git add . && git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     else git add . && git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     fi; }; commitpush"
@@ -164,7 +164,7 @@ gitconfig() {
 
   if ! git config --global alias.somecommitpush >/dev/null 2>&1; then
     git config --global alias.somecommitpush "!somecommitpush() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     else git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     fi; }; somecommitpush"
@@ -336,7 +336,7 @@ gitconfig() {
   fi; # prunedangling
   if ! git config --global alias.em >/dev/null 2>&1; then
     git config --global alias.em "!em() {
-    [ -z \$EDITOR ] && EDITOR='vim';
+    [ -z \"\$EDITOR\" ] && EDITOR='vim';
     \$EDITOR \$(git status --porcelain | awk '{print \$2}'); }; em"
     echo "alias em ✓"
   else
@@ -344,7 +344,7 @@ gitconfig() {
   fi; # em
   if ! git config --global alias.ec >/dev/null 2>&1; then
     git config --global alias.ec "!ec() {
-    [ -z \$EDITOR ] && EDITOR='vim';
+    [ -z \"\$EDITOR\" ] && EDITOR='vim';
     git diff --name-only | uniq | xargs \$EDITOR; }; ec"
     echo "alias ec ✓"
   else
@@ -354,7 +354,7 @@ gitconfig() {
     git config --global alias.copyfile "!copyfile() {
     fname=\"\${2%.*}\";
     fext=\".\${2##*.}\";
-    [ \$fname = \$fext ] && fext='';
+    [ \"\$fname\" = \"\$fext\" ] && fext='';
     branch=\$(echo \"\$1\" | sed 's/[[:space:]]\\{1,\\}/_/g');
     git show \"\$1\":\"\$2\" > \"\$fname-\$branch\$fext\";
     git status; }; copyfile"
@@ -372,7 +372,7 @@ gitconfig() {
   fi; # overwrite
   if ! git config --global alias.ac >/dev/null 2>&1; then
     git config --global alias.ac "!ac() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git add . && git commit -v;
     else git add . && git commit -vm \"\$@\";
     fi; }; ac"
@@ -382,7 +382,7 @@ gitconfig() {
   fi; # ac
   if ! git config --global alias.cpush >/dev/null 2>&1; then
     git config --global alias.cpush "!cpush() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     else git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     fi; }; cpush"
@@ -392,7 +392,7 @@ gitconfig() {
   fi; # cpush
   if ! git config --global alias.acpush >/dev/null 2>&1; then
     git config --global alias.acpush "!acpush() {
-    if [ \$# -eq 0 ];
+    if [ \"\$#\" -eq 0 ];
     then git add . && git commit -v && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     else git add . && git commit -vm \"\$@\" && git push origin \$(git branch | grep \\* | cut -d ' ' -f2);
     fi; }; acpush"
