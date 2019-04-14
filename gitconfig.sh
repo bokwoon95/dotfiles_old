@@ -355,8 +355,9 @@ gitconfig() {
     fname=\"\${2%.*}\";
     fext=\".\${2##*.}\";
     [ \"\$fname\" = \"\$fext\" ] && fext='';
+    [ \"\$fname\" = \"\" ] && (fname=\"\$fext\" && fext='');
     branch=\$(echo \"\$1\" | sed 's/[[:space:]]\\{1,\\}/_/g');
-    git show \"\$1\":\"\$2\" > \"\$fname-\$branch\$fext\";
+    git show \"\$1\":\"\$2\" > \"\$fname_\$branch\$fext\";
     git status; }; copyfile"
     echo "alias copyfile ✓"
   else
